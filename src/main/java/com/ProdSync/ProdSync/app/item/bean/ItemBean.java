@@ -19,5 +19,6 @@ public class ItemBean {
     private BigDecimal price;
     private BigDecimal weight;
     private Integer quantity;
+    private Integer supplierId;
     private String supplierName;
 }

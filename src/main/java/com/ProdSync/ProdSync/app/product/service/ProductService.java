@@ -54,19 +54,19 @@ public class ProductService {
                 .stockQuantity(param.getStockQuantity())
                 .build();
 
-        List<ProductItemMapping> mappings = param.getItems().stream()
-                .map(i -> {
-                    Item item = itemRepository.findById(i.getItemId())
-                            .orElseThrow(() -> RestException.INVALID("Item not found: " + i.getItemId()));
+//        List<ProductItemMapping> mappings = param.getItems().stream()
+//                .map(i -> {
+//                    Item item = itemRepository.findById(i.getItemId())
+//                            .orElseThrow(() -> RestException.INVALID("Item not found: " + i.getItemId()));
+//
+//                    return ProductItemMapping.builder()
+//                            .product(product)
+//                            .item(item)
+//                            .quantity(i.getQuantity())
+//                            .build();
+//                }).toList();
+//        product.setProductItems(mappings);
 
-                    return ProductItemMapping.builder()
-                            .product(product)
-                            .item(item)
-                            .quantity(i.getQuantity())
-                            .build();
-                }).toList();
-
-        product.setProductItems(mappings);
         productRepository.save(product);
     }
 

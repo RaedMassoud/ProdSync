@@ -40,6 +40,7 @@ public class ItemService {
                 .serialNumber(item.getSerialNumber())
                 .price(item.getPrice())
                 .weight(item.getWeight())
+                .supplierId(item.getSupplier().getId())
                 .supplierName(item.getSupplier().getName())
                 .build();
     }
@@ -54,6 +55,7 @@ public class ItemService {
                                 .serialNumber(item.getSerialNumber())
                                 .price(item.getPrice())
                                 .weight(item.getWeight())
+                                .supplierId(item.getSupplier().getId())
                                 .supplierName(item.getSupplier().getName())
                                 .build()).toList();
     }
