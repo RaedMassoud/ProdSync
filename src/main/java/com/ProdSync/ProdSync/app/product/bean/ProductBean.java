@@ -4,6 +4,7 @@ import com.ProdSync.ProdSync.app.item.bean.ItemBean;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Getter
@@ -30,6 +31,8 @@ public class ProductBean {
 				.map(ItemBean::getLandedCost)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
-		this.finalCost = landedCost.multiply(overHead);
+		this.finalCost = landedCost
+			.multiply(overHead)
+			.setScale(3, RoundingMode.HALF_UP);
 	}
 }

@@ -39,7 +39,7 @@ public class OfferService {
 
     public List<OfferBean> getAllOfferBeans() {
         return offerRepository.findAll().stream()
-				.map(p -> toBean(p, false)).toList();
+				.map(o -> toBean(o, false)).toList();
     }
 
     public void submit(OfferParam param) {
@@ -92,6 +92,15 @@ public class OfferService {
 
         offerRepository.deleteById(id);
     }
+
+	public List<OfferBean> getOfferBeansByProductId(Integer id, Boolean unitEconomics) {
+		if (id == null || id <= 0)
+			throw RestException.INVALID("Product ID is required");
+
+		return offerRepository.findAllByProductId(id).stream()
+			.map(o -> toBean(o, unitEconomics != null ? unitEconomics : false))
+			.toList();
+	}
 
     private OfferBean toBean(Offer offer, boolean unitEconomics) {
 		OfferBean bean = OfferBean.builder()

@@ -47,4 +47,12 @@ public class OfferController {
         offerService.delete(id);
         return ResponseEntity.ok("Offer deleted successfully");
     }
+
+	@GetMapping("/product/{id}")
+	public ResponseEntity<List<OfferBean>> getOffersByProductId(
+		@PathVariable Integer id,
+		@RequestParam(required = false) Boolean unitEconomics) {
+
+		return ResponseEntity.ok(offerService.getOfferBeansByProductId(id, unitEconomics));
+	}
 }

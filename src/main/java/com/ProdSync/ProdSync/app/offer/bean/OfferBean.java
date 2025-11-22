@@ -41,20 +41,23 @@ public class OfferBean {
 
 		this.totalCost = product.getFinalCost()
 			.multiply(BigDecimal.valueOf(quantity))
-			.add(BigDecimal.valueOf(delivery));
+			.add(BigDecimal.valueOf(delivery))
+			.setScale(3, RoundingMode.HALF_UP);
 	}
 
 	public void calculateGrossProfitAndMargin() {
 		if (totalCost == null)
 			throw RestException.INVALID("Total cost is not calculated.");
 
-		this.grossProfit = sellingPrice.subtract(totalCost);
+		this.grossProfit = sellingPrice
+			.subtract(totalCost)
+			.setScale(3, RoundingMode.HALF_UP);;
 
 		if (sellingPrice.compareTo(BigDecimal.ZERO) == 0) {
 			this.grossMargin = BigDecimal.ZERO;
 		} else {
 			this.grossMargin = grossProfit
-				.divide(sellingPrice, 4, RoundingMode.HALF_UP)
+				.divide(sellingPrice, 3, RoundingMode.HALF_UP)
 				.multiply(BigDecimal.valueOf(100));
 		}
 	}
@@ -67,7 +70,7 @@ public class OfferBean {
 			this.ROAS = BigDecimal.ZERO;
 		} else {
 			this.ROAS = sellingPrice
-				.divide(totalCost, 4, RoundingMode.HALF_UP);
+				.divide(grossProfit, 3, RoundingMode.HALF_UP);
 		}
 	}
 
@@ -75,13 +78,15 @@ public class OfferBean {
 		if (grossProfit == null)
 			throw RestException.INVALID("Gross profit is not calculated.");
 
-		this.netProfit = grossProfit.subtract(targetCAC);
+		this.netProfit = grossProfit
+			.subtract(targetCAC)
+			.setScale(3, RoundingMode.HALF_UP);;
 
 		if (sellingPrice.compareTo(BigDecimal.ZERO) == 0) {
 			this.netMargin = BigDecimal.ZERO;
 		} else {
 			this.netMargin = netProfit
-				.divide(sellingPrice, 4, RoundingMode.HALF_UP)
+				.divide(sellingPrice, 3, RoundingMode.HALF_UP)
 				.multiply(BigDecimal.valueOf(100));
 		}
 	}
